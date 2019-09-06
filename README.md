@@ -3,14 +3,17 @@
 
 
 
-Introduction
+## Introduction
 Medium is one of the best places for worlds most insightful writers, masterminds, and storytellers to present the smartest takes on topics that matter. One can always find fresh thinking and unique perspectives on Medium. There are a lot of amazing articles in the field of data science, machine learning and artificial intelligence. The scope of our project is to give insights about a post before the user even publishes it. For this project, we focused on Medium articles and stories. 
+
 Our project is going to help user with the following goals:
-Assisting users to write effective articles
-Help users to generate tags
-Predictive keyboard for writing articles
+1. Assisting users to write effective articles
+2. Help users to generate tags
+3. Predictive keyboard for writing articles
+
 The objective is to implement and experiment on medium data to decide what sort of stories become prominent, predict the tags that can be associated with a post, and make predictive keyboard for the articles. We have experimented with various models, including Regression (Linear, Random Forest, Support Vector, Gradient Boosting), Recurrent Neural Network, Sequential, Multi Label K Nearest Neighbors, Naive Bayes. We have experimented different ways of extracting features from the Medium dataset. The objective metrics used include R2 coefficient of determination, root mean squared error and mean absolute error, accuracy score, and F1 score. Using these objective metrics to evaluate the different prediction  systems should translate to providing meaningful predictions to users. We have compared the results of multiple models to see what algorithm performs the best. We also did a analysis on article text to predict next possible word while writing articles.
-System Design & Implementation 
+
+## System Design & Implementation 
 The design choice was to use algorithms that were somewhat robust to large amounts of data, since based on the exploration of the data, we noticed that many users had large amounts of article data. Another design choice was to choose algorithms that were fast and efficient for real time processing.
 
 For assisting users to write effective articles, we have considered regression models to predict the effectiveness of a particular article. We have considered claps count as a dependent variable and title, text, author, reading time as independent variables. We experimented with multiple machine learning algorithms such as linear regression, random forest regression, gradient boosting regression, support vector regression for the prediction of articles’ clap.
@@ -20,12 +23,7 @@ To help users to generate tags, we have considered classification model to predi
 
 For predicting keyboard for writing articles, we have considered Long Short Term Memory model to predict or complete the word. From the dataset we have considered text field for this approach. We have used LSTM to examine current input and the way it was provided one step earlier. For hypertunning of the model we have taken epochs as 5, validation split as 0.05, and shuffle as true. We are calculating accuracy after each epochs to predict the best values. The details of all the experiments will be mentioned in the next section.
 
-
-
-
-
-
-Workflow of our model -
+## Workflow of our model -
 
 
 
@@ -33,13 +31,13 @@ Workflow of our model -
 
 
 
-Data Preprocessing & Exploration
+## Data Preprocessing & Exploration
 For the dataset, we used articles from Medium which was provided on Kaggle. It consisted of CSV files that had information about the articles like text, title, reading time, number of claps, tags associated to the article, etc.
 The original dataset consists of all posts tagged AI, Machine Learning, Data Science or Artificial Intelligence on Medium. There are around 280000 articles in this data set. Each article has around 50 different columns associated with it.
 To preprocess the data, we followed the following steps:
 Reducing Columns: Based on the goals, we removed the columns that are not relevant. For number of claps prediction, we have used title, text, author, reading time and total clap counts as columns. For tags we have used text, title, tag_name … For predictive keyboard, we are using text column only.
 
-Dealing with Duplicate Rows:
+## Dealing with Duplicate Rows:
 In our dataset, the tags are in different rows, so there are a duplicate posts. We are extracting those tags and adding them to a single row and deleting the duplicate rows.
 Dealing with NaNs:
 Some of the fields like title and subtitle have some values as NaN, i.e. these fields are left empty. Since this is categorical data, we are removing the rows which has NaN values. 
