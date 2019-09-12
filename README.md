@@ -31,78 +31,82 @@ For predicting keyboard for writing articles, we have considered Long Short Term
 ## Data Preprocessing & Exploration
 For the dataset, we used articles from Medium which was provided on Kaggle. It consisted of CSV files that had information about the articles like text, title, reading time, number of claps, tags associated to the article, etc.
 The original dataset consists of all posts tagged AI, Machine Learning, Data Science or Artificial Intelligence on Medium. There are around 280000 articles in this data set. Each article has around 50 different columns associated with it.
+
 To preprocess the data, we followed the following steps:
-Reducing Columns: Based on the goals, we removed the columns that are not relevant. For number of claps prediction, we have used title, text, author, reading time and total clap counts as columns. For tags we have used text, title, tag_name … For predictive keyboard, we are using text column only.
+1. Reducing Columns: 
+Based on the goals, we removed the columns that are not relevant. For number of claps prediction, we have used title, text, author, reading time and total clap counts as columns. For tags we have used text, title, tag_name … For predictive keyboard, we are using text column only.
 
-## Dealing with Duplicate Rows:
+2. Dealing with Duplicate Rows:
 In our dataset, the tags are in different rows, so there are a duplicate posts. We are extracting those tags and adding them to a single row and deleting the duplicate rows.
-Dealing with NaNs:
+
+3. Dealing with NaNs:
 Some of the fields like title and subtitle have some values as NaN, i.e. these fields are left empty. Since this is categorical data, we are removing the rows which has NaN values. 
-NLP: The text and title fields were performed filtering for removing characters and numbers, stopwords, lemmatize words for tags prediction. This cleaned text and title was then used by the model for prediction.
 
-Feature Extraction: We have used Tf-idf vectorizer for text feature extraction and then applied standard scaler to scale the extracted feature.
+4. NLP: 
+The text and title fields were performed filtering for removing characters and numbers, stopwords, lemmatize words for tags prediction. This cleaned text and title was then used by the model for prediction.
 
-
-Splitting Strings to Columns : The raw data for tag prediction has tag_name for each post id and multiple rows for each post id for different tag_name in each row. We considered only the top 10 tag_names and added one tag name as column.
-
-
-Get Dummies: The resultant df of tag_name for post_id from above step 6 was converted into sparse matrix for faster computation and reduce memory usage.
+5. Feature Extraction: 
+We have used Tf-idf vectorizer for text feature extraction and then applied standard scaler to scale the extracted feature.
 
 
-Creating Article Corpus: For predictive keyboard, we created an article corpus which had text from all the articles. We used this article corpus to train our model.
+6. Splitting Strings to Columns : 
+The raw data for tag prediction has tag_name for each post id and multiple rows for each post id for different tag_name in each row. We considered only the top 10 tag_names and added one tag name as column.
+
+
+7. Get Dummies: 
+The resultant df of tag_name for post_id from above step 6 was converted into sparse matrix for faster computation and reduce memory usage.
+
+
+8. Creating Article Corpus: 
+For predictive keyboard, we created an article corpus which had text from all the articles. We used this article corpus to train our model.
 
 We did some data exploration to get a better idea of the dataset. After analyzing the dataset, we found top ten tags present in the the article dataset. Also, after going deeper into the data we found how the reading time varies with the number of claps we found that people tend to give more claps when the reading time is less.The plots of the distributions are shown below. 
 
+![Data](https://github.com/SweetySojrani/MediumStories/blob/master/Images/Data_Stats.PNG)
 
-         		      
-       Top 10 Tags				      Reading Time vs Claps
-
-
-
-                    Word Cloud of text				Word frequency of text
-
-    
-
-
-
-
-
-
-Experiments & Analysis
+## Experiments & Analysis
 
 We utilized 8 columns for feature extraction of Medium articles. The columns are title attributes, text categories, author, and reading time, total clap count, language, tag name, and postId. The total clap count column is numeric, so we standard scaled it to prevent it from dominating the feature space. 
 As mentioned before, for regression, we kept the total clap as is. The workflow for this was to use the training set for training the models, and the hold-out validation set for selecting the best model for each user. Essentially, whichever model performed the best on the hold-out validation set was selected as the final model for the user articles. Four models per regression (Linear, Random forest, Gradient Boosting, Support Vector) were chosen. The results are shown to get an overall view each respective algorithms performance. 
 
+![Model](https://github.com/SweetySojrani/MediumStories/blob/master/Images/Model.PNG)
 
 The final test evaluation result for all the regression models for predicting claps for the articles are shown below. 
+       
+![ModelScore](https://github.com/SweetySojrani/MediumStories/blob/master/Images/Model_Score.PNG)       
        
 In general, it seems that gradient boosting algorithm performed the best out on the test set when compared to other regression techniques.
 
 The final test evaluation result for all the classification models for predicting tags associated with articles are shown below. 
 
+![ModelScore2](https://github.com/SweetySojrani/MediumStories/blob/master/Images/Model_Score_2.PNG)
                 
 It seems MLKNN(Multi-label K-nearest neighbor) performed the best out on the test set when compared to Gaussian Naive Bayes technique.
+
 The final test evaluation result for the LSTM model for predicting keyboard for writing articles is shown below.
+![Predictive](https://github.com/SweetySojrani/MediumStories/blob/master/Images/Predictive.PNG)
 
 It seems model predicting the best accuracy on the test set after 5 epochs.
-Discussion & Conclusion
-Decision Made
-We decided to drop some of the columns from the dataset that provided no apparent value to our objective.
-Initially, we were going to implement a hybrid system, but decided to separate each individual system to do a better analysis of the performance of the individual systems.
-We decided to go for the regression approaches for assisting users to write effective articles, classification approaches to help users to generate tags, and neural network approach to predict keyboard for writing articles.
 
-## Difficulties Faced
+## Discussion & Conclusion
+### Decision Made
+
+1. We decided to drop some of the columns from the dataset that provided no apparent value to our objective.
+2. Initially, we were going to implement a hybrid system, but decided to separate each individual system to do a better analysis of the performance of the individual systems.
+3. We decided to go for the regression approaches for assisting users to write effective articles, classification approaches to help users to generate tags, and neural network approach to predict keyboard for writing articles.
+
+### Difficulties Faced
 Due large dataset, we had dependency on HPC. However, HPC was not working properly and kept disconnecting frequently.
 The dataset had large number of class imbalanced. 
 There were multiple tags on same ID. So, we dealt with tags by creating lists and applying one hot encoding on it. 
 
-## Things that worked
+### Things that worked
 1. The word cloud and histogram were giving a nice zest of what is the article all about. 
 2. Linear regression worked smoothly on dataset although it took a long time, and comparing it with other regression algorithm. 
 3. LSTM model predicted best accuracy after increasing the epochs.
 4. MLKNN worked better on dataset for predicting tags, and comparing it with Gaussian Naive Bayes.  
 
-## Things that didn’t work well
+### Things that didn’t work well
 We tried implementing CNN for clap prediction, however we got similar clap count for each test data. So, we decided not to implement classification algorithm for it.
 
 ## Conclusion:
