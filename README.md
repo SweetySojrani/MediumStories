@@ -25,10 +25,7 @@ For predicting keyboard for writing articles, we have considered Long Short Term
 
 ## Workflow of our model -
 
-
-
-
-
+![Workflow](https://github.com/SweetySojrani/MediumStories/blob/master/Images/Workflow.PNG)
 
 
 ## Data Preprocessing & Exploration
