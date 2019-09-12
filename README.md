@@ -96,9 +96,9 @@ It seems model predicting the best accuracy on the test set after 5 epochs.
 3. We decided to go for the regression approaches for assisting users to write effective articles, classification approaches to help users to generate tags, and neural network approach to predict keyboard for writing articles.
 
 ### Difficulties Faced
-Due large dataset, we had dependency on HPC. However, HPC was not working properly and kept disconnecting frequently.
-The dataset had large number of class imbalanced. 
-There were multiple tags on same ID. So, we dealt with tags by creating lists and applying one hot encoding on it. 
+1. Due large dataset, we had dependency on HPC. However, HPC was not working properly and kept disconnecting frequently.
+2. The dataset had large number of class imbalanced. 
+3. There were multiple tags on same ID. So, we dealt with tags by creating lists and applying one hot encoding on it. 
 
 ### Things that worked
 1. The word cloud and histogram were giving a nice zest of what is the article all about. 
@@ -107,7 +107,7 @@ There were multiple tags on same ID. So, we dealt with tags by creating lists an
 4. MLKNN worked better on dataset for predicting tags, and comparing it with Gaussian Naive Bayes.  
 
 ### Things that didn’t work well
-We tried implementing CNN for clap prediction, however we got similar clap count for each test data. So, we decided not to implement classification algorithm for it.
+1. We tried implementing CNN for clap prediction, however we got similar clap count for each test data. So, we decided not to implement classification algorithm for it.
 
 ## Conclusion:
 In conclusion, we experimented with multiple models on the Medium article dataset. We were able to help user write effective articles. Give them the insights like number of claps without even publishing the article. We were able to help them generate effective tags. Also, we were able to build a predictive keyboard to help user type articles.
